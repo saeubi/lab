@@ -26,12 +26,7 @@ class S_WebChannelObject(QObject):
 class WebView(QWidget):
     def __init__(self):
         super().__init__()
-
-        # 레이아웃 생성
-        layout = QVBoxLayout()
-        layout.setContentsMargins(0,0,0,0)
-        self.setLayout(layout)
-
+        
         # S_WebEngineView 생성
         self.browser = S_WebEngineView()
 
@@ -41,6 +36,11 @@ class WebView(QWidget):
         local_url = QUrl.fromLocalFile(file_path)
 
         self.browser.setUrl(local_url)
+        
+        # 레이아웃 생성
+        layout = QVBoxLayout()
+        layout.setContentsMargins(0,0,0,0)
+        self.setLayout(layout)
         # QWebEngineView를 레이아웃에 추가
         layout.addWidget(self.browser)       
 
