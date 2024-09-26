@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul, li {
+    list-style: none;
+}
+
+
+#top-bar-area {
+    width: 100vw;
+    height: 50px;
+    background-color: #aaaaff;
+}
+
+#side-menu-area {
+    width: 250px;    
+    height: calc(100vh - 50px);
+    background-color: #ffaaaa;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <script type="text/javascript" src="qwebchannel.js"></script>
+    <script type="text/javascript">
+        var channel = null;
+        let number = 1;
+        // QWebChannel을 설정하여 파이썬과 통신
+        new QWebChannel(qt.webChannelTransport, function (channelObject) {
+            channel = channelObject;
+            window.channelObject = channel.objects.channelObject;
+        });
+
+        function sendDataToPython() {
+            number++;
+            window.channelObject.receiveData(`Hello from JavaScript! ${number}` );
+        }
+    </script>
+</head>
+<body>
+    <h1>Test Page</h1>
+    <button onclick="sendDataToPython()">Send Data to Python</button>
+</body>
+</html>
