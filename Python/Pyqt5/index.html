@@ -4,6 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Page</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <header id="top-bar-area"></header>
+    <nav id="side-menu-area">
+        <ul id="side-menu-list">
+            <li class="side-menu" onclick="sendDataToPython('메뉴1')">메뉴1</li>
+            <li class="side-menu" onclick="sendDataToPython('메뉴2')">메뉴2</li>
+            <li class="side-menu" onclick="sendDataToPython('메뉴3')">메뉴3</li>
+            <li class="side-menu" onclick="sendDataToPython('메뉴4')">메뉴4</li>
+        </ul>
+    </nav>
+    <main id="main-area">
+        <h1>Test Page</h1>
+        <button onclick="sendDataToPython()">Send Data to Python</button>
+    </main>
+
+
+
+
     <script type="text/javascript" src="qwebchannel.js"></script>
     <script type="text/javascript">
         var channel = null;
@@ -13,15 +33,12 @@
             channel = channelObject;
             window.channelObject = channel.objects.channelObject;
         });
-
-        function sendDataToPython() {
+    
+        function sendDataToPython(value) {
             number++;
-            window.channelObject.receiveData(`Hello from JavaScript! ${number}` );
+            value = value !== undefined ? value : number
+            window.channelObject.receiveData(`Hello from JavaScript! ${value}` );
         }
     </script>
-</head>
-<body>
-    <h1>Test Page</h1>
-    <button onclick="sendDataToPython()">Send Data to Python</button>
 </body>
 </html>
