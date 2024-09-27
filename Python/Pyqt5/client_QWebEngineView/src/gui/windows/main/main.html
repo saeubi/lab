@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Page</title>
-    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
     <header id="top-bar-area"></header>
@@ -17,28 +17,39 @@
         </ul>
     </nav>
     <main id="main-area">
-        <h1>Test Page</h1>
-        <button onclick="sendDataToPython()">Send Data to Python</button>
+        <div>
+            <h1>Test Page</h1>
+            <button id="myButton" onclick="sendDataToPython()">Send Data to Python</button>
+        </div>
     </main>
 
 
 
 
-    <script type="text/javascript" src="qwebchannel.js"></script>
+    <script type="text/javascript" src="../../core/qwebchannel.js"></script>
     <script type="text/javascript">
         var channel = null;
         let number = 1;
         // QWebChannel을 설정하여 파이썬과 통신
         new QWebChannel(qt.webChannelTransport, function (channelObject) {
             channel = channelObject;
-            window.channelObject = channel.objects.channelObject;
+            window.channelObject = channel.objects.main;
         });
     
         function sendDataToPython(value) {
             number++;
             value = value !== undefined ? value : number
-            window.channelObject.receiveData(`Hello from JavaScript! ${value}` );
+
+            let testValue;
+            window.channelObject.sendData(function(v) {
+                testValue = v;
+                window.channelObject.receiveData(`Hello from JavaScript! ${value} +++ ${testValue}`);
+            });
+
         }
+
+
+
     </script>
 </body>
 </html>
