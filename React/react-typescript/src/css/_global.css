@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    margin: 0;
+}
+
+body::-webkit-scrollbar {
+    /* 스크롤바의 너비를 0으로 설정 */
+    width: 0; 
+    /* 수평 스크롤바의 높이도 0으로 설정 */
+    height: 0; 
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

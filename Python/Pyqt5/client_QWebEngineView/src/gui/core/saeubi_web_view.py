@@ -4,15 +4,14 @@ from PyQt5.QtCore import QUrl
 from .saeubi_web_engine import SeaUBiWebEngineView
 
 class SaeUBiWebView(QWidget):
-    def __init__(self, file_path, channel_name, callback=None):
+    def __init__(self, file_path, channel_name):
         super().__init__()
         
-        # S_WebEngineView 생성
+        # WebEngineView 생성
         self.browser = SeaUBiWebEngineView(channel_name)
 
         local_url = QUrl.fromLocalFile(file_path)
         self.browser.setUrl(local_url)
-        self.callback = callback
         self.browser.loadFinished.connect(self.onLoadFinished)
         
         # 레이아웃 생성
@@ -24,5 +23,7 @@ class SaeUBiWebView(QWidget):
 
     def onLoadFinished(self, result):
         if result:
-            if self.callback is not None:
-                self.callback()
+            pass
+        
+    def addCallbackFuncForChannelObject(self, callbackfunc):
+        self.browser.addCallbackFuncForChannelObject(callbackfunc)

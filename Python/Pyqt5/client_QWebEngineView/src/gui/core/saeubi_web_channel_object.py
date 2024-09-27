@@ -7,7 +7,8 @@ from PyQt5.QtCore import QUrl, QObject, pyqtSlot
 class SaeUBiWebChannelObject(QObject):    
     def __init__(self):
         super().__init__()
-        self.data = "Send Test Data"  # 인스턴스 변수
+        self.data = ""
+        self.receiveCallbackList = []
             
     @pyqtSlot(result=str)
     def sendData(self):
@@ -15,4 +16,9 @@ class SaeUBiWebChannelObject(QObject):
             
     @pyqtSlot(str)
     def receiveData(self, data):
-        print(f"Received on: {data}")  # 메뉴 항목 출력
+        self.data = data
+        for callback in self.receiveCallbackList:
+            callback()
+
+    def addReceiveCallBack(self, callbackFunc):
+        self.receiveCallbackList.append(callbackFunc)

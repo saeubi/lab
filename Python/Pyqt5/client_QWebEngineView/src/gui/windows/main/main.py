@@ -10,9 +10,14 @@ class MainWindow(QMainWindow):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(current_dir, "main.html")
         
-        # html을 로드할때 text를 읽은다음 header에 qwebchannel.js를 임포트하는걸 강제로 넣으면?
         self.web_view = SaeUBiWebView(file_path, "main")
-        self.setCentralWidget(self.web_view)        
+        self.setCentralWidget(self.web_view)
+
         # 윈도우 크기 설정
         self.setGeometry(0, 0, 800, 600)
-        self.setStyleSheet("background-color: red")
+
+        # Callback 함수 바인딩
+        self.web_view.addCallbackFuncForChannelObject(self.testPrint)
+
+    def testPrint(self):
+        print('Test Message')
