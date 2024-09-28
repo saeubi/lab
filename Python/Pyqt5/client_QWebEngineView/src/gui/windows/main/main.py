@@ -47,6 +47,7 @@ class MainWindow(QMainWindow):
 
         # Callback 함수 바인딩
         self.web_view.addCallbackFuncForChannelObject(self.testPrint)
+        self.web_view.addCallbackFuncForChannelObject(self.testPrintNoneParam)
 
     def resizeEvent(self, event):
         # 위젯 크기 조정
@@ -56,3 +57,6 @@ class MainWindow(QMainWindow):
     # channel object binding function
     def testPrint(self, data):
         self.switcher.show_widget(data)
+
+    def testPrintNoneParam(self):
+        print('hohohohohohohohohohohohohohoh')

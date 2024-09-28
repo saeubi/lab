@@ -29,21 +29,16 @@ class SaeUBiWebChannelObject(QObject):
                 if p.default == inspect.Parameter.empty and p.kind in (inspect.Parameter.POSITIONAL_OR_KEYWORD, inspect.Parameter.POSITIONAL_ONLY)
             ]
             
-            print(f"{required_params.count()}개")
-            
             # 필요한 인수의 수에 따라 분기합니다.
             if len(required_params) == 0:
-                print("No arguments required. Calling callback without arguments.")
+                print("No arguments required.")
                 callback()
-            elif len(required_params) == 2:
-                print("Two arguments required. Calling callback with arguments 10 and 20.")
-                callback(10, 20)
+            elif len(required_params) == 1:
+                print("One arguments required.")
+                callback(self.data)
             else:
                 print(f"{len(required_params)} arguments required. Providing default values.")
                 # 필요에 따라 기본값을 제공하거나 예외를 발생시킬 수 있습니다.
-                callback()
-
-            callback(self.data)
 
     def getData(self):
         return self.data
