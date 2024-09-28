@@ -10,6 +10,7 @@ class SaeUBiWidgetSwitcher(QWidget):
 
         # 메인 레이아웃 설정
         main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.addWidget(self.stacked_widget)
         self.setLayout(main_layout)
 

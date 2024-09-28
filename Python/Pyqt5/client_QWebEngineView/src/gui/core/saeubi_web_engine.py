@@ -19,5 +19,9 @@ class SeaUBiWebEngineView(QWebEngineView):
         # QWebEnginePage에 QWebChannel 설정
         self.page().setWebChannel(self.channel)
 
+    # channel object function call
+    def getChannelData(self):
+        return self.channel_object.getData()
+
     def addCallbackFuncForChannelObject(self, callbackfunc):
         self.channel_object.addReceiveCallBack(callbackfunc)  

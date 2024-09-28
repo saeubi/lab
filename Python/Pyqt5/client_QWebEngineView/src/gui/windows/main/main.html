@@ -10,10 +10,10 @@
     <header id="top-bar-area"></header>
     <nav id="side-menu-area">
         <ul id="side-menu-list">
-            <li class="side-menu">메뉴1</li>
-            <li class="side-menu">메뉴2</li>
-            <li class="side-menu">메뉴3</li>
-            <li class="side-menu">메뉴4</li>
+            <li class="side-menu" data-menu-name="test1">메뉴1</li>
+            <li class="side-menu" data-menu-name="test2">메뉴2</li>
+            <li class="side-menu" data-menu-name="test3">메뉴3</li>
+            <li class="side-menu" data-menu-name="test4">메뉴4</li>
         </ul>
     </nav>
     <main id="main-area">
@@ -38,7 +38,14 @@
         const btn = document.getElementById('myButton');
         btn.addEventListener('click', function() {
             window.channelObject.receiveData("Text Send");
-        })
+        });
+
+        const menuList = document.querySelectorAll('#side-menu-list .side-menu');
+        menuList.forEach((menu, index) => {
+            menu.addEventListener('click', function() {                
+                window.channelObject.receiveData(menu.getAttribute('data-menu-name'));
+            });
+        });
 
 
     </script>

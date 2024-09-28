@@ -18,7 +18,10 @@ class SaeUBiWebChannelObject(QObject):
     def receiveData(self, data):
         self.data = data
         for callback in self.receiveCallbackList:
-            callback()
+            callback(self.data)
+
+    def getData(self):
+        return self.data
 
     def addReceiveCallBack(self, callbackFunc):
         self.receiveCallbackList.append(callbackFunc)

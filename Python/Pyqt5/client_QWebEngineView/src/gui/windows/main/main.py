@@ -25,7 +25,7 @@ class MainWindow(QMainWindow):
 
         # 서브 레이아웃 생성
         self.sub_layout = QVBoxLayout()
-        self.sub_layout.setContentsMargins(0, 0, 0, 0)
+        self.sub_layout.setContentsMargins(10, 10, 10, 10)
         self.testWidget1.setLayout(self.sub_layout)
 
         self.switcher = SaeUBiWidgetSwitcher()
@@ -35,8 +35,15 @@ class MainWindow(QMainWindow):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(current_dir, "test1.html")        
         self.test1 = SaeUBiWebView(file_path, "test1")
-        self.switcher.add_widget("test", self.test1)
-        self.switcher.show_widget("test")
+        self.switcher.add_widget("test1", self.test1)
+
+        # WebView 위젯 생성
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(current_dir, "test2.html")        
+        self.test2 = SaeUBiWebView(file_path, "test2")
+        self.switcher.add_widget("test2", self.test2)
+
+        self.switcher.show_widget("test1")
 
         # Callback 함수 바인딩
         self.web_view.addCallbackFuncForChannelObject(self.testPrint)
@@ -46,5 +53,6 @@ class MainWindow(QMainWindow):
         super().resizeEvent(event)  # 기본 리사이즈 이벤트 처리        
         self.testWidget1.setGeometry(200, 200, self.width() - 200, self.height() - 200)
 
-    def testPrint(self):
-        print('Test Message')
+    # channel object binding function
+    def testPrint(self, data):
+        self.switcher.show_widget(data)

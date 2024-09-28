@@ -26,5 +26,9 @@ class SaeUBiWebView(QWidget):
         if result:
             pass
         
+    # channel object function call
+    def getChannelData(self):
+        return self.browser.getChannelData()
+
     def addCallbackFuncForChannelObject(self, callbackfunc):
         self.browser.addCallbackFuncForChannelObject(callbackfunc)
