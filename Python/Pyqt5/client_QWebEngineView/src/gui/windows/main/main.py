@@ -56,7 +56,10 @@ class MainWindow(QMainWindow):
 
     # channel object binding function
     def testPrint(self, data):
-        self.switcher.show_widget(data)
+        if data == "Text Send":
+            print(data)
+        else:
+            self.switcher.show_widget(data)
 
     def testPrintNoneParam(self):
         print('hohohohohohohohohohohohohohoh')
