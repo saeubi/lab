@@ -1,7 +1,7 @@
 import os, sys, json
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from PyQt5.QtCore import QUrl
-from .saeubi_web_engine import SeaUBiWebEngineView
+from .saeubi_web_engine_view import SeaUBiWebEngineView
 
 class SaeUBiWebView(QWidget):
     def __init__(self, file_path, channel_name, parent=None):

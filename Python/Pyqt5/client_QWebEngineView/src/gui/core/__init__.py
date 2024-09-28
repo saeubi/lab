@@ -1,4 +1,4 @@
 from .saeubi_web_channel_object import SaeUBiWebChannelObject
-from .saeubi_web_engine import SeaUBiWebEngineView
+from .saeubi_web_engine_view import SeaUBiWebEngineView
 from .saeubi_web_view import SaeUBiWebView
 from .saeubi_widget_switcher import SaeUBiWidgetSwitcher
