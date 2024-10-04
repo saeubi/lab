@@ -1,11 +1,13 @@
 # 메모
 `$ npm run build` 로 생성된 build/index.html는 화면 구동에 필요한 .js파일등의 경로가 기본 /로 설정되어있다.
 package.json 파일의 기본 설정 부분에
-  "name": "pyqt5_ui",
+
+  `"name": "pyqt5_ui",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
-위와같이 "homepage" : "./"를 추가하면 시작 경로가 ./로 변경된다.
+  "homepage": "./",`
+  
+위와같이 `"homepage" : "./"`를 추가하면 시작 경로가 ./로 변경된다.
 
 
 # Getting Started with Create React App
