@@ -1,0 +1,12 @@
+<mvc:View 
+controllerName="rootpath(ui5.yaml의 패키지명(name)).controller.viewName(사용자 설정값)" 
+xmlns:mvc="sap.ui.core.mvc" 
+displayBlock="true" 
+xmlns="sap.m" 
+xmlns:f="sap.f" 
+xmlns:core="sap.ui.core" 
+xmlns:form="sap.ui.layout.form">
+	<f:DynamicPage toggleHeaderOnTitleClick="false">
+	  <!-- 이건 기본이고 -->
+	</f:DynamicPage>
+</mvc:View>

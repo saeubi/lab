@@ -1,0 +1,6 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" controllerName="com.saeubi.controller.tmpView" displayBlock="true">
+    <f:DynamicPage toggleHeaderOnTitleClick="false">
+        <child1>This is child 1</child1>
+        <child2 attribute="value">This is child 2</child2>
+    </f:DynamicPage>
+</mvc:View>
