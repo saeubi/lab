@@ -1,6 +1,78 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" controllerName="com.saeubi.controller.tmpView" displayBlock="true">
     <f:DynamicPage toggleHeaderOnTitleClick="false">
-        <child1>This is child 1</child1>
-        <child2 attribute="value">This is child 2</child2>
+        <f:content>
+            <FlexBox id="main" direction="Column">
+                <FlexBox name="searchSection" direction="Row" justifyContent="Center" alignItems="Center">
+                    <FlexBox direction="Row" justifyContent="Center" alignItems="Center">
+                        <Label text="Name"/>
+                        <Input type="Text" value="{tmpViewModel>/Name}"/>
+                    </FlexBox>
+                    <FlexBox direction="Row" justifyContent="Center" alignItems="Center">
+                        <Label text="ID"/>
+                        <Input type="Text" value="{tmpViewModel>/ID}"/>
+                    </FlexBox>
+                    <FlexBox direction="Row" justifyContent="Center" alignItems="Center">
+                        <Label text="Price"/>
+                        <Input type="Text" value="{tmpViewModel>/Price}"/>
+                    </FlexBox>
+                </FlexBox>
+                <FlexBox name="tableSection" direction="Row" justifyContent="Center" alignItems="Center">
+                    <Table id="table_tableSection" growing="true" growingThreshold="20" growingScrollToLoad="true" mode="MultiSelect" width="auto" items="{tmpViewModel>/Products}" itemPress="onListItemPress">
+                        <columns>
+                            <Column width="auto" hAlign="Center">
+                                <Label text="DiscontinuedDate">
+                                    <customData>
+                                        <core:CustomData key="property" value="DiscontinuedDate"/>
+                                    </customData>
+                                </Label>
+                            </Column>
+                            <Column width="auto" hAlign="Center">
+                                <Label text="Description">
+                                    <customData>
+                                        <core:CustomData key="property" value="Description"/>
+                                    </customData>
+                                </Label>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem vAlign="Middle" type="Navigation">
+                                <cells>
+                                    <Text text="{tmpViewModel>DiscontinuedDate}"/>
+                                    <Text text="{tmpViewModel>Description}"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </FlexBox>
+                <FlexBox name="detail" direction="Row" justifyContent="Center" alignItems="Center">
+                    <Table id="table_detail" growing="true" growingThreshold="20" growingScrollToLoad="true" mode="MultiSelect" width="auto" items="{tmpViewModel>/Products}" itemPress="onListItemPress">
+                        <columns>
+                            <Column width="auto" hAlign="Center">
+                                <Label text="Description">
+                                    <customData>
+                                        <core:CustomData key="property" value="Description"/>
+                                    </customData>
+                                </Label>
+                            </Column>
+                            <Column width="auto" hAlign="Center">
+                                <Label text="Description">
+                                    <customData>
+                                        <core:CustomData key="property" value="Description"/>
+                                    </customData>
+                                </Label>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem vAlign="Middle" type="Navigation">
+                                <cells>
+                                    <Text text="{tmpViewModel>Description}"/>
+                                    <Text text="{tmpViewModel>Description}"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </FlexBox>
+            </FlexBox>
+        </f:content>
     </f:DynamicPage>
 </mvc:View>
