@@ -4,11 +4,29 @@ import './dropDraw.css'
 function DropDraw() {
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [dragPosition, setDragPosition] = useState<{x:number, y:number} | null>(null);
-    const dragItemRef = useRef<HTMLDivElement | null>(null);
 
     const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
         if (isDragging) setDragPosition({x:e.clientX, y:e.clientY});
     };
+
+    const handleDrop = (i: number) => {
+        console.log(i);
+    }
+    
+
+    const parentRef = useRef<HTMLDivElement | null>(null);
+
+    const findChildAtCoordinates = (x: number, y: number) => {
+        const elementAtPoint = document.elementFromPoint(x, y);
+        if (!elementAtPoint) {
+            return null; // 해당 좌표에 요소가 없으면 null 반환
+        }
+        if (parentRef.current && parentRef.current.contains(elementAtPoint)) {
+            return elementAtPoint; // 해당 위치의 자식 요소 반환
+        }
+        return null; // 자식 요소가 없으면 null 반환
+    };
+
 
     return (        
         <div id="drop-draw" className="page">
@@ -23,15 +41,25 @@ function DropDraw() {
                     }}
                     onDragEnd={() => {
                         setIsDragging(false);
+                        const childElement = findChildAtCoordinates(dragPosition?.x || 0, dragPosition?.y || 0);
+                        childElement?.parentElement?.removeChild(childElement);
+                        if (childElement) {
+                            console.log('찾은 자식 요소:', childElement);
+                        } else {
+                            console.log('해당 위치에 자식 요소가 없습니다.');
+                        }
+
+
                         setDragPosition(null);
                     }}
                     onDrag={handleDrag}
-                    ref={dragItemRef}
                 ></div>
             </div>
             <div className="draw-area"
+                ref={parentRef}
                 onDragOver={(e) => {
                     e.preventDefault(); // 드래그 가능하도록 기본 동작 방지
+                    e.stopPropagation();
                     console.log("Over 이벤트 발생");
                 }}
                 onDragLeave={(e) => {
@@ -44,8 +72,8 @@ function DropDraw() {
                 }}
             >     
                 {Array(5).fill(null).map((_, i) => (
-                    <TmpBox key={i} index={i} onDrop={(e) => {
-
+                    <TmpBox key={i} index={i} onDrop={handleDrop} onDrag={(i) => {
+                        console.log(i);
                     }}/>
                 ))}
             </div>
@@ -66,20 +94,36 @@ function DropDraw() {
     그려지는 컴포넌트 자체의 정보 <- 얘는 매니저같은걸만들어서 한번에 관리해야하나?
     드래그해서 가져가면 마우스위치기준으로 판단해야하나 아니면 좌측상단 위치 기준으로 해당 위치에 걸리는 위치로 지정해야하나 구현후 확인이 필요함
 
+    클릭하는순간 해당 요소에서의 위치를 가져온 후 마우스위치에서 그 값을 계산해서 좌측상단 포지션을 업데이트한다. 계속
+    그러면서 해당 위치에 겹치는 요소를 계속 검사해야할듯 draw area 기준으로
 */
 
 
 interface TmpBoxProps {
     index: number;
-    onDrop: () => void;
+    onDrop: (i:number) => void;
+    onDrag: (i:number) => void;
 }
 
-function TmpBox({index, onDrop}: TmpBoxProps) {
+function TmpBox({index, onDrop, onDrag}: TmpBoxProps) {
 
 
     return (
-        <div style={{ width: "50px", height: "50px", backgroundColor: "red", margin: "10px" }} onDrop={onDrop}>
-
+        <div style={{ width: "50px", height: "50px", backgroundColor: "red", margin: "10px" }} 
+        onDrop={() => {
+            onDrop(index);
+        }}
+        // onDragOver={() => {
+        //     onDrag(index);
+        //     console.log("탬프에들어옴")
+        // }}
+        onClick={() => {
+            console.log(index);
+        }}
+        
+        >
+        
+        
         </div>
     );
 }
