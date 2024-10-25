@@ -11,7 +11,7 @@ class WebEngineView(QMainWindow):
         
         # 윈도우 크기 설정
         self.resize(800, 600)
-        self.setWindowTitle('TDX Framework')
+        self.setWindowTitle('prayer app')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
