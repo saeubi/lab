@@ -1,133 +1,35 @@
 import React, { useEffect, useState, useRef } from "react";
 import './dropDraw.css'
 
+import DragIcon from "./sub/DragIcon";
+import DropArea from "./sub/DropArea";
+
 function DropDraw() {
-    const [isDragging, setIsDragging] = useState<boolean>(false);
-    const [dragPosition, setDragPosition] = useState<{x:number, y:number} | null>(null);
+    const [isDrag, setIsDrag] = useState<boolean>(false);
+    const [grabOffset, setGrabOffset] = useState<{x:number,y:number}>({x:0,y:0})
 
-    const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
-        if (isDragging) setDragPosition({x:e.clientX, y:e.clientY});
+    const dragStart = (x:number, y:number) => {
+        setGrabOffset({x, y});
     };
 
-    const handleDrop = (i: number) => {
-        console.log(i);
-    }
-    
-
-    const parentRef = useRef<HTMLDivElement | null>(null);
-
-    const findChildAtCoordinates = (x: number, y: number) => {
-        const elementAtPoint = document.elementFromPoint(x, y);
-        if (!elementAtPoint) {
-            return null; // 해당 좌표에 요소가 없으면 null 반환
-        }
-        if (parentRef.current && parentRef.current.contains(elementAtPoint)) {
-            return elementAtPoint; // 해당 위치의 자식 요소 반환
-        }
-        return null; // 자식 요소가 없으면 null 반환
+    const callbackDrag = (flag: boolean) => {
+        setIsDrag(flag);        
     };
-
 
     return (        
         <div id="drop-draw" className="page">
             <div className="component-area">
-                <div
-                    className="tmp-component"
-                    style={{ width: "50px", height: "50px", backgroundColor: "#ccccff" }}
-                    draggable="true"
-                    onDragStart={(e) => {
-                        e.dataTransfer.setData('text', 'ccc');
-                        setIsDragging(true);
-                    }}
-                    onDragEnd={() => {
-                        setIsDragging(false);
-                        const childElement = findChildAtCoordinates(dragPosition?.x || 0, dragPosition?.y || 0);
-                        childElement?.parentElement?.removeChild(childElement);
-                        if (childElement) {
-                            console.log('찾은 자식 요소:', childElement);
-                        } else {
-                            console.log('해당 위치에 자식 요소가 없습니다.');
-                        }
-
-
-                        setDragPosition(null);
-                    }}
-                    onDrag={handleDrag}
-                ></div>
+                <DragIcon setGrabOffset={dragStart} isDrag={callbackDrag}/>
             </div>
-            <div className="draw-area"
-                ref={parentRef}
-                onDragOver={(e) => {
-                    e.preventDefault(); // 드래그 가능하도록 기본 동작 방지
-                    e.stopPropagation();
-                    console.log("Over 이벤트 발생");
-                }}
-                onDragLeave={(e) => {
-                    //console.log("Leave 이벤트 발생");
-                }}
-                onDrop={(e) => {
-                    e.preventDefault();
-                    console.log(dragPosition);
-                    console.log("Drop 이벤트 발생");
-                }}
-            >     
-                {Array(5).fill(null).map((_, i) => (
-                    <TmpBox key={i} index={i} onDrop={handleDrop} onDrag={(i) => {
-                        console.log(i);
-                    }}/>
-                ))}
+
+            <div className="draw-area">                
+                <DropArea isDrag={isDrag} grabOffset={grabOffset} previewComponent={
+                    <div style={{width: "500px", height: "200px", backgroundColor: "red"}}></div>
+                }></DropArea>
             </div>
         </div>
     );
 }
-
-// 드래그 존? 에어리어? 를 상속받던 어쩌던 그런 영역지정하는부분이 여러개가 있어야함
-// 예를들면 header / content / section 뭐 이런느낌으로? 블록화를 할 수 있어야할 듯 
-// 섹션이 최상위로하고 header / content 가 별도의 스타일이나 속성을 가진 영역으로
-// section은 기본적으로 본인 격자를 가지고있고 컴포넌트들도 가로 몇 세로몇 이런 영역이 정해져있으면 좋을것같음.
-
-// 드래그되는 컴포넌트들이 가지고있어야할 정보들
-/*
-    이름?
-    icon 이미지같은거
-    격자크기 or 그냥 크기
-    그려지는 컴포넌트 자체의 정보 <- 얘는 매니저같은걸만들어서 한번에 관리해야하나?
-    드래그해서 가져가면 마우스위치기준으로 판단해야하나 아니면 좌측상단 위치 기준으로 해당 위치에 걸리는 위치로 지정해야하나 구현후 확인이 필요함
-
-    클릭하는순간 해당 요소에서의 위치를 가져온 후 마우스위치에서 그 값을 계산해서 좌측상단 포지션을 업데이트한다. 계속
-    그러면서 해당 위치에 겹치는 요소를 계속 검사해야할듯 draw area 기준으로
-*/
-
-
-interface TmpBoxProps {
-    index: number;
-    onDrop: (i:number) => void;
-    onDrag: (i:number) => void;
-}
-
-function TmpBox({index, onDrop, onDrag}: TmpBoxProps) {
-
-
-    return (
-        <div style={{ width: "50px", height: "50px", backgroundColor: "red", margin: "10px" }} 
-        onDrop={() => {
-            onDrop(index);
-        }}
-        // onDragOver={() => {
-        //     onDrag(index);
-        //     console.log("탬프에들어옴")
-        // }}
-        onClick={() => {
-            console.log(index);
-        }}
-        
-        >
-        
-        
-        </div>
-    );
-}
-
 
 
 export default DropDraw;
