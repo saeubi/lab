@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DragElement from "./DragElement";
 
 interface DragIconPops {
-    setGrabOffset?: (x: number, y: number) => void;
+    setGrabOffset?: (x: number, y: number, component: React.ReactNode) => void;
     isDrag?: (flag: boolean) => void;
-
+    ownComponent:React.ReactNode;
 }
 
-function DragIcon({ setGrabOffset, isDrag }: DragIconPops) {
+function DragIcon({ setGrabOffset, isDrag, ownComponent}: DragIconPops) {
+    let storedNode: React.ReactNode = <TmpComponent />;
 
     return (
         <DragElement 
@@ -19,7 +20,7 @@ function DragIcon({ setGrabOffset, isDrag }: DragIconPops) {
 
             //e.dataTransfer.setData('text', 'test data');
             if (isDrag) isDrag(true);
-            if (setGrabOffset) setGrabOffset(x, y);
+            if (setGrabOffset) setGrabOffset(x, y, storedNode);
 
         }}
         onDragEnd={(e) => {
@@ -32,3 +33,16 @@ function DragIcon({ setGrabOffset, isDrag }: DragIconPops) {
 }
 
 export default DragIcon;
+
+
+
+function TmpComponent() {
+    return (
+        <div
+        style={{
+            width: "200px",
+            height: "50px",
+            backgroundColor: "green"
+        }}></div>
+    );
+}

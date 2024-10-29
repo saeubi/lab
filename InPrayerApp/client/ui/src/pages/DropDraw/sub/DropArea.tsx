@@ -4,16 +4,17 @@ interface DropAreaProps {
     isDrag: boolean;
     grabOffset: {x: number, y: number};
     previewComponent?: React.ReactNode;
+    onDrop: (x: number, y:number) => void;
 }
 
-function DropArea({isDrag, grabOffset, previewComponent} : DropAreaProps) {
+function DropArea({isDrag, grabOffset, previewComponent, onDrop} : DropAreaProps) {
     const dropAreaRef = useRef<HTMLDivElement | null>(null);
     const [areaSize, setAreaSize] = useState({ width: 0, height: 0 });
 
     // preview component 관련 속성
     const [isShow, setIsShow] = useState<boolean>(false);
-    const [left, setLeft] = useState<string>("");
-    const [top, setTop] = useState<string>("");
+    const [left, setLeft] = useState<number>(0);
+    const [top, setTop] = useState<number>(0);
     const [opacity, setOpacity] = useState<number>(0);
 
     // Area 크기 업데이트 함수
@@ -52,8 +53,8 @@ function DropArea({isDrag, grabOffset, previewComponent} : DropAreaProps) {
     useEffect(() => {        
         if (!isDrag) {
             setIsShow(false);
-            setLeft("");
-            setTop("");
+            setLeft(0);
+            setTop(0);
             setOpacity(0);
         }
         // 추가로 애니메이션, 스타일 변경 등 필요한 로직 실행
@@ -105,9 +106,8 @@ function DropArea({isDrag, grabOffset, previewComponent} : DropAreaProps) {
                     const pRect = dropAreaRef.current.getBoundingClientRect();
                     const cRect = childElement.getBoundingClientRect();
 
-                    const cPosX = `${cRect.x - pRect.x}px`;
-                    const cPosY = `${Math.round(cRect.y - pRect.y)}px`;
-                    console.log(cPosY);
+                    const cPosX = cRect.x - pRect.x;
+                    const cPosY = Math.round(cRect.y - pRect.y);
                     setLeft(cPosX);
                     setTop(cPosY);
                     setOpacity(1);
@@ -118,13 +118,17 @@ function DropArea({isDrag, grabOffset, previewComponent} : DropAreaProps) {
         onDragLeave={(e) => {}}
         onDrop={(e) => {
             e.preventDefault();
+            onDrop(left, top);
             console.log("Drop 이벤트 발생");
             console.log(`Left: ${left}, Top: ${top}`)
         }}     
         
         >
             {slots}
-            {(isDrag && isShow) && <PositionPreview left={left} top={top} opacity={opacity}>{previewComponent}</PositionPreview>}
+            {(isDrag && isShow)  && 
+            <PositionPreview left={`${left}px`} top={`${top}px`} opacity={opacity}>
+                {previewComponent}
+            </PositionPreview>}
         </div>
     );
 
