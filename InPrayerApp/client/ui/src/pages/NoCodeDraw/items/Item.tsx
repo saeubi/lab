@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { DragElement } from "../components";
 
 // icon
@@ -40,24 +40,45 @@ function Item(): ItemReturn {
 
     return {
         Icon: Icon,
-        DrawItem: ({onDragStart, onDragEnd, onDrag, onDragOver}: ItemProps) => (
+        DrawItem: ({onDragStart, onDragEnd, onDrag, onDragOver}: ItemProps) => {
+            const [isDrag, setIsDrag] = useState<boolean>(false)
+            return (
             <DragElement 
-            onDragStart={onDragStart}
+            onDragStart={() => {
+                setIsDrag(true);
+                if (onDragStart) onDragStart();
+            }}
             onDragEnd={onDragEnd}
             onDrag={onDrag} 
-            onDragOver={onDragOver}            
+            onDragOver={() => {
+                setIsDrag(false);
+                if (onDragOver) onDragOver();
+            }}            
             >
-                <div
+            {isDrag ?
+            <div
+            style={{
+                width: "300px",
+                height: "45px",
+                border: "1px solid #000000",
+                backgroundColor: "#ffffff"                
+            }}
+            >
+            </div>
+            :
+            <div
                 style={{
                     width: "300px",
                     height: "45px",
                     backgroundColor: "#ccccff"
                 }}
-                >
+            >
+            </div>
+            }
+                
     
-                </div>
             </DragElement>
-        )
+        )}
     };
 }
 
