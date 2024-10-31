@@ -15,7 +15,6 @@ function NoCodeDraw() {
         if (item) {
             setGrabbedItem(item);
         }
-        console.log("Dragged item:", item);
         // 여기에 아이템을 저장하거나 다른 로직을 구현할 수 있습니다.
     };
 
@@ -26,16 +25,12 @@ function NoCodeDraw() {
             {items.map(({ name, item }, index) => {
                 
                 const {Icon, DrawItem} = item();
+                
                 return (
                     <Icon key={index}
-                    onDragStart={() => {
-                        setGrabbedItem(() => DrawItem);
-                    }}
-                    onDragEnd={() => {
-                        console.log("드래그 종료");
-                        setGrabbedItem(null);
-                    }}
-                    onDrag={() => console.log("드래그 중")}
+                    onDragStart={() => {setGrabbedItem(() => DrawItem);}}
+                    onDragEnd={() => {setGrabbedItem(null);}}
+                    onDrag={() => {}}
                     />
                 );
             })}
@@ -44,8 +39,7 @@ function NoCodeDraw() {
 
             {/* draw area */}
             <div id="draw-area">
-                <DropArea PreviewItem={grabbedItem} setPreviewItem={handleItemDragStart} onDrop={() => {console.log("draw ondrop");}}></DropArea>
-                <DropArea PreviewItem={grabbedItem} setPreviewItem={(e) => {console.log(e)}} onDrop={() => {console.log("draw ondrop");}}></DropArea>
+                <DropArea PreviewItem={grabbedItem} setPreviewItem={handleItemDragStart} onDrop={() => {console.log("draw ondrop");}} color="#ffcccc" name="base"></DropArea>
               {/* <TmpItem></TmpItem> */}
             </div>
         </div>

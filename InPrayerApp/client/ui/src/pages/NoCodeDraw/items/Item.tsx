@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragElement } from "../components";
 
 // icon
@@ -21,10 +21,12 @@ function Icon({onDragStart, onDragEnd, onDrag}: IconProps) {
 
 // item
 export interface ItemProps {
-    onDragStart?: () => void;
-    onDragEnd?: () => void;
-    onDrag?: () => void;
-    onDragOver?: () => void;
+    onDragStart?: (event: React.DragEvent<HTMLDivElement>) => void;
+    onDragEnd?: (event: React.DragEvent<HTMLDivElement>) => void;
+    onDrag?: (event: React.DragEvent<HTMLDivElement>) => void;
+    onDragOver?: (event: React.DragEvent<HTMLDivElement>) => void;
+
+    checkParent?: (flag: boolean) => void;
 }
 
 interface ItemReturn {
@@ -40,20 +42,23 @@ function Item(): ItemReturn {
 
     return {
         Icon: Icon,
-        DrawItem: ({onDragStart, onDragEnd, onDrag, onDragOver}: ItemProps) => {
-            const [isDrag, setIsDrag] = useState<boolean>(false)
+        DrawItem: ({onDragStart, onDragEnd, onDrag, onDragOver, checkParent}: ItemProps) => {
+            const [isDrag, setIsDrag] = useState<boolean>(false);
+            const [parentItem, setParentItem] = useState<React.FC | null>(null);
+
             return (
             <DragElement 
-            onDragStart={() => {
+            onDragStart={(event) => {
+                if (onDragStart) onDragStart(event);
                 setIsDrag(true);
-                if (onDragStart) onDragStart();
             }}
             onDragEnd={onDragEnd}
             onDrag={onDrag} 
-            onDragOver={() => {
+            onDragOver={(event) => {
+                if (onDragOver) onDragOver(event);
                 setIsDrag(false);
-                if (onDragOver) onDragOver();
             }}            
+            checkParent={checkParent}
             >
             {isDrag ?
             <div
