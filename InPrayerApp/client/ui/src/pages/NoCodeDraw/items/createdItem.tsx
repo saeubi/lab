@@ -18,7 +18,10 @@ export default createItem("#ffff00",
                 if (ItemProps.onDragOver) ItemProps.onDragOver(event);
                 setIsDrag(false);
             },
-            onDrop: ItemProps.onDrop,         
+            onDrop: (event: React.DragEvent<HTMLDivElement>) => {
+                console.log("실행되는 함수 전달"); //아니다 이걸로 만들어진애 위에서 드롭되었을 때 실행됨
+                if (ItemProps && ItemProps.onDrop) ItemProps.onDrop(event);
+            },         
             checkParent: ItemProps.checkParent
         }
 

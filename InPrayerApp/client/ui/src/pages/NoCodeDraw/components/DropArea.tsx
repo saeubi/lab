@@ -107,7 +107,9 @@ function DropArea({PreviewItem, setPreviewItem, onDragEnter, onDragLeave, onDrag
                         setHoverIndex(-1);
                         if (setPreviewItem) setPreviewItem(null);                        
                     },
-
+                    onDrop: () => {
+                        console.log("여기에이렇게구현하면 이게 먼저?");
+                    },
                     checkParent: (result: boolean) => {                        
                         // if (!result) setDroppedItems((prevItems) => prevItems.filter((_, i) => i !== index));
                     },
