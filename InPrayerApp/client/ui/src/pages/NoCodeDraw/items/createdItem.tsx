@@ -3,7 +3,8 @@ import createItem, { ItemProps } from "../utils/createItem";
 import DragElement, { DragElementProps } from "../components/DragElement";
 
 
-export default createItem("#ffff00", 
+export default createItem(
+    "#ffff00", 
     (ItemProps: ItemProps) => {
         const [isDrag, setIsDrag] = useState<boolean>(false);
 

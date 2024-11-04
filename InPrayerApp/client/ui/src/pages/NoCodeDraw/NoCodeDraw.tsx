@@ -22,18 +22,21 @@ function NoCodeDraw() {
         <div id="no-code-draw">
             {/* icon list area */}
             <div id="icon-list-area">
-            {items.map(({ name, item }, index) => {
-                
-                const {Icon, DrawItem} = item();
-                
-                return (
-                    <Icon key={index}
-                    onDragStart={() => {setGrabbedItem(() => DrawItem);}}
-                    onDragEnd={() => {setGrabbedItem(null);}}
-                    onDrag={() => {}}
-                    />
-                );
-            })}
+                <div id="header-n-content-icon">
+                </div>
+
+                {items.map(({ name, item }, index) => {
+                    
+                    const {Icon, DrawItem} = item();
+                    
+                    return (
+                        <Icon key={index}
+                        onDragStart={() => {setGrabbedItem(() => DrawItem);}}
+                        onDragEnd={() => {setGrabbedItem(null);}}
+                        onDrag={() => {}}
+                        />
+                    );
+                })}
             </div>
 
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DragElement from "./DragElement";
-import { ItemProps } from "../items/Item";
+import { ItemProps, ChildProps } from "../utils/createItem";
 
 export interface DropAreaProps {
     PreviewItem?: React.FC<ItemProps> | null;
@@ -11,11 +11,18 @@ export interface DropAreaProps {
     onDragOver?: (event: React.DragEvent<HTMLDivElement>) => void;
     onDrop?: (event: React.DragEvent<HTMLDivElement>) => void;
 
+    // 임시속성
     color?: string;
     name?: string;
+    
+    // 리렌더링 시점 Item 관리
+    getDroppedItems?: () => React.FC<ItemProps>[]; // 부모로 전달할 상태 조회 함수
 }
 
-function DropArea({PreviewItem, setPreviewItem, onDragEnter, onDragLeave, onDragOver, onDrop, color, name}: DropAreaProps) {
+function DropArea({PreviewItem, setPreviewItem, onDragEnter, onDragLeave, onDragOver, onDrop, color, name,
+
+    getDroppedItems
+}: DropAreaProps) {
     const [droppedItems, setDroppedItems] = useState<React.FC<ItemProps>[]>([]);
     const [grabIndex, setGrabIndex] = useState<number>(-1);
     const [hoverIndex, setHoverIndex] = useState<number>(-1);
@@ -26,16 +33,28 @@ function DropArea({PreviewItem, setPreviewItem, onDragEnter, onDragLeave, onDrag
     useEffect(() => {        
     }, [PreviewItem]);
 
+
+    // 부모가 `droppedItems`를 가져갈 수 있도록 함수 설정
+    if (getDroppedItems) {
+        getDroppedItems = () => droppedItems;
+    }
     // const handleDragStart = (item: React.ReactNode) => (e: React.DragEvent<HTMLDivElement>) => {
     //     e.dataTransfer.setData("text/plain", item as any);
     // };
 
-    const rearrangeItems = (arr: React.FC<ItemProps>[], grabIndex: number, hoverIndex: number): React.FC<ItemProps>[] => {
+    const rearrangeItems = (arr: React.FC<ItemProps & ChildProps>[], grabIndex: number, hoverIndex: number): React.FC<ItemProps>[] => {
         const newArray = [...arr]; // 원본 배열 복사    
-
         // 요소 제거 후 변수에 저장
         const [grabbedItem] = newArray.splice(grabIndex, 1);
     
+        // 타입 체크: grabbedItem이 DropAreaProps인지 확인
+        if (grabbedItem && isDropAreaProps(grabbedItem)) {
+            // DropAreaProps일 경우 getDroppedItems 호출
+            const droppedItems = grabbedItem.getDroppedItems?.();
+            console.log('DropArea에서 가져온 droppedItems:', droppedItems);
+        }
+
+
         // 요소를 overIndex 앞에 삽입
         newArray.splice(hoverIndex, 0, grabbedItem);    
         return newArray;
@@ -142,4 +161,13 @@ function Preview({children}: {children?: React.ReactNode}) {
             {children}
         </div>
     );
+}
+
+
+
+
+
+// DropAreaProps 타입인지 확인하는 타입 가드
+function isDropAreaProps(props: any): props is DropAreaProps {
+    return (props as DropAreaProps).getDroppedItems !== undefined;
 }
