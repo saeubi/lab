@@ -4,6 +4,9 @@ import { Icon, DropArea } from "./components"
 
 import loadItems from "./utils/loadItems";
 import { ItemProps } from "./items/Item";
+import Item from "./components/Item/Item";
+import UIItem from "./components/Item/UIItem";
+import TmpItem from "./components/Item/TmpItem";
 
 
 function NoCodeDraw() {
@@ -44,6 +47,14 @@ function NoCodeDraw() {
             <div id="draw-area">
                 <DropArea PreviewItem={grabbedItem} setPreviewItem={handleItemDragStart} onDrop={() => {console.log("draw ondrop");}} color="#ffcccc" name="base"></DropArea>
               {/* <TmpItem></TmpItem> */}
+                <Item>아이템</Item>
+                <div style={{width: "10px", height: "10px"}}></div>
+                <UIItem>                    
+                    <TmpItem></TmpItem>
+                </UIItem>
+                <UIItem>
+                    <input type="text" />
+                </UIItem>
             </div>
         </div>
     );

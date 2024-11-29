@@ -43,3 +43,35 @@
     min-height: 300px;
     background-color: antiquewhite;
 }
+
+
+
+/* 테스트 진행중 */
+
+/* .tmp-item {
+    position: relative;
+    bottom: 100px;
+    width: 200px;
+    height: 50px;
+    box-sizing: border-box;
+    background-color: #ffcfff;
+} */
+
+.tmp-item:hover {
+    /* border: 1px solid #000; */
+}
+
+
+/* .tmp-emphasize {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+} 
+
+.tmp-item.emphasize > .tmp-emphasize {
+    border: 2px solid black;
+    background-color: #00000033;
+} */
