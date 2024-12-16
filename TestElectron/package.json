@@ -1,0 +1,21 @@
+{
+  "name": "my-electron-app",
+  "version": "1.0.0",
+  "description": "A simple Electron app with custom window controls",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-packager ."
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-packager": "^17.1.2"
+  },
+  "keywords": [
+    "electron",
+    "desktop-app",
+    "custom-window"
+  ],
+  "author": "",
+  "license": ""
+}

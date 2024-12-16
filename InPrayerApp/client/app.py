@@ -10,7 +10,7 @@ class WebEngineView(QMainWindow):
         super().__init__()
         
         # 윈도우 크기 설정
-        self.resize(800, 600)
+        self.resize(1200, 800)
         self.setWindowTitle('prayer app')
 
 if __name__ == '__main__':

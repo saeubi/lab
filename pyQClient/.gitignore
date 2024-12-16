@@ -1,0 +1,63 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+ENV/
+env/
+
+# Distribution / packaging
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# PyQt specific
+*.pyqtdeploy
+
+# Editor specific
+.vscode/
+.idea/
+
+# Logs and temporary files
+*.log
+*.bak
+*.swp
+*.tmp
+*.orig
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Python testing
+.coverage
+.tox/
+.nox/
+.pytest_cache/
+
+# React related
+node_modules/
+build/
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+yarn.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+.next/
+out/
+storybook-static/
+
+# Dependency files
+pip-log.txt
+
+# Temporary files
+*.bak
+*.swp
